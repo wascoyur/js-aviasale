@@ -1,7 +1,7 @@
 const formSearch = document.querySelector('.form-search'),
 inputCitiesFrom = document.querySelector('.input__cities-from'),
 dropdownCitiesTo = document.querySelector('.dropdown__cities-to'),
-dropdownCitiesfrom= document.querySelector('.dropdown__cities-from'),
+dropdownCitiesfrom = document.querySelector('.dropdown__cities-from'),
 inputCitiesTo = document.querySelector('.input__cities-to'),
 inputDateDepart = document.querySelector('input__date-depart');
 
@@ -33,4 +33,10 @@ inputCitiesFrom.addEventListener('input', ()=>{
     showCity(inputCitiesFrom, dropdownCitiesfrom)
 })
 
-
+dropdownCitiesfrom.addEventListener('click', (event)=>{
+    const target = event.target;
+    if(target.tagName.toLowerCase() ==='li'){
+        inputCitiesFrom.value = target.textContent;
+        dropdownCitiesfrom.textContent = '';
+    }
+})

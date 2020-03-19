@@ -5,7 +5,7 @@ dropdownCitiesfrom = document.querySelector('.dropdown__cities-from'),
 inputCitiesTo = document.querySelector('.input__cities-to'),
 inputDateDepart = document.querySelector('input__date-depart');
 
-const city =[];
+let city =[];
 
 const citiesApi = 'db/cities.json';
 
@@ -32,15 +32,18 @@ const showCity = (input, list) => {
 
   if (input.value !== "") {
     const filterCity = city.filter((item, i, arr) => {
-      const it = item.name.toLowerCase();
-      let r = it.includes(input.value.toLowerCase());
-      return r;
+      if (item.name) {
+        const it = item.name.toLowerCase();
+        let r = it.includes(input.value.toLowerCase());
+        return r;
+      }
+
     });
 
     filterCity.forEach(item => {
       const li = document.createElement("li");
       li.classList.add("dropdown__city");
-      li.textContent = item.n;
+      li.textContent = item.name;
       list.append(li);
     });
   }
@@ -81,12 +84,7 @@ dropdownCitiesTo.addEventListener('click', (event)=>{
 // call functions
 
 getData(citiesApi, (data) => {
-  const dataCities = JSON.parse(data);
-
-  city = dataCities.filter((item) =>{
-    console.log(item.name);
-    return true;
-  })
-
-  console.log(city);
+  city = JSON.parse(data).filter((item) => {
+      return item.name;
+  });
 });

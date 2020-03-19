@@ -5,8 +5,9 @@ dropdownCitiesfrom = document.querySelector('.dropdown__cities-from'),
 inputCitiesTo = document.querySelector('.input__cities-to'),
 inputDateDepart = document.querySelector('input__date-depart');
 
-const city =['Москва', 'Санкт-Петербург', 'Минск', 'Караганда', 'Челябинск', 'новгород','Калининград',
-'Волгоград', 'Самара', 'Керчь'];
+const city =[];
+
+const citiesApi = 'db/cities.json';
 
 const getData = (url, callback) => {
   const request = new XMLHttpRequest();
@@ -17,7 +18,7 @@ const getData = (url, callback) => {
     if(request.readyState !==4) return;
 
     if(request.status ===200){
-      console.log(request.response);
+      callback(request.response);
     } else{
       console.error(request.status)
     }
@@ -31,7 +32,7 @@ const showCity = (input, list) => {
 
   if (input.value !== "") {
     const filterCity = city.filter((item, i, arr) => {
-      const it = item.toLowerCase();
+      const it = item.name.toLowerCase();
       let r = it.includes(input.value.toLowerCase());
       return r;
     });
@@ -39,7 +40,7 @@ const showCity = (input, list) => {
     filterCity.forEach(item => {
       const li = document.createElement("li");
       li.classList.add("dropdown__city");
-      li.textContent = item;
+      li.textContent = item.n;
       list.append(li);
     });
   }
@@ -79,4 +80,13 @@ dropdownCitiesTo.addEventListener('click', (event)=>{
 
 // call functions
 
-getData("https://jsonplaceholder.typicode.com/todos/1");
+getData(citiesApi, (data) => {
+  const dataCities = JSON.parse(data);
+
+  city = dataCities.filter((item) =>{
+    console.log(item.name);
+    return true;
+  })
+
+  console.log(city);
+});

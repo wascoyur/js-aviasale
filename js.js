@@ -60,6 +60,15 @@ const selectCity = (event, input, list) => {
   }
 }
 
+const renderCheap = (data, date) =>{
+  const cheapTicket = JSON.parse(data).best_prices;
+
+  cheapTicketDay = cheapTicket.filter((item) =>{
+    return item.depart_date === date;
+  })
+  console.log(cheapTicketDay);
+}
+
 const handlerCity = (event, input, list) => {
   const target = event.target;
   if (target.tagName.toLowerCase() === "li") {
@@ -83,7 +92,7 @@ formSearch.addEventListener("submit", event => {
                       '&one_way=true&token=' +
                       API_KEY;
   getData(proxy + CALENDAR + requestData, (response) =>{
-      console.log(response);
+      renderCheap(response, formData.when);
   });
 });
 

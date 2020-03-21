@@ -60,13 +60,26 @@ const selectCity = (event, input, list) => {
   }
 }
 
+const renderCheapDay = (cheapTicket) =>{
+  console.log(cheapTicket)
+};
+
+const renderCheapYear = (cheapTickets) =>{
+  console.log(cheapTickets);
+};
+
+
 const renderCheap = (data, date) =>{
   const cheapTicket = JSON.parse(data).best_prices;
 
   cheapTicketDay = cheapTicket.filter((item) =>{
     return item.depart_date === date;
   })
-  console.log(cheapTicketDay);
+
+  renderCheapDay(cheapTicketDay);
+  renderCheapYear(cheapTicketDay);
+
+  console.log(cheapTicket);
 }
 
 const handlerCity = (event, input, list) => {

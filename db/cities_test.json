@@ -1,0 +1,20 @@
+{
+		"time_zone": "Europe/Moscow",
+		"name": "Москва",
+		"coordinates": {
+			"lon": 37.617633,
+			"lat": 55.755786
+		},
+		"code": "MOW",
+		"cases": {
+			"vi": "в Москву",
+			"tv": "Москвой",
+			"ro": "Москвы",
+			"pr": "Москве",
+			"da": "Москве"
+		},
+		"name_translations": {
+			"en": "Moscow"
+		},
+		"country_code": "RU"
+	},

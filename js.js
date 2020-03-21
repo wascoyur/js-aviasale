@@ -3,7 +3,7 @@ inputCitiesFrom = document.querySelector('.input__cities-from'),
 dropdownCitiesTo = document.querySelector('.dropdown__cities-to'),
 dropdownCitiesfrom = document.querySelector('.dropdown__cities-from'),
 inputCitiesTo = document.querySelector('.input__cities-to'),
-inputDateDepart = document.querySelector('input__date-depart');
+inputDateDepart = document.querySelector('.input__date-depart');
 
 let city =[];
 

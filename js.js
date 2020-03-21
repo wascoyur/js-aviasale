@@ -8,7 +8,8 @@ inputDateDepart = document.querySelector('.input__date-depart');
 let city =[];
 
 const citiesApi = "http://api.travelpayouts.com/data/ru/cities.json",
-      API_KEY = "0fb72a23216d66abb8952e3dd7cc3364",
+  API_KEY = "0fb72a23216d66abb8952e3dd7cc3364",
+  CALENDAR = "http://min-prices.aviasales.ru/calendar_preload",
       proxy = "https://cors-anywhere.herokuapp.com/";
 
 const getData = (url, callback) => {
@@ -76,8 +77,17 @@ formSearch.addEventListener("submit", event => {
     when: inputDateDepart.value
   };
 
-  console.log(formData);
+  const requestData = '?depart_date=' + formData.when +
+                      '&origin=' + formData.from +
+                      '&destination=' + formData.to +
+                      '&one_way=true&token=' +
+                      API_KEY;
+  getData(proxy + CALENDAR + requestData, (response) =>{
+      console.log(response);
+  });
 });
+
+//обработчики событий
 
 inputCitiesFrom.addEventListener('input', ()=>{
     showCity(inputCitiesFrom, dropdownCitiesfrom)

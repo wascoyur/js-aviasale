@@ -3,7 +3,10 @@ inputCitiesFrom = document.querySelector('.input__cities-from'),
 dropdownCitiesTo = document.querySelector('.dropdown__cities-to'),
 dropdownCitiesfrom = document.querySelector('.dropdown__cities-from'),
 inputCitiesTo = document.querySelector('.input__cities-to'),
-inputDateDepart = document.querySelector('.input__date-depart');
+inputDateDepart = document.querySelector('.input__date-depart'),
+cheapestTicket = document.getElementById('cheapest-ticket'),
+otherCheapTickets = document.getElementById('other-cheap-tickets')
+;
 
 let city =[];
 
@@ -102,17 +105,22 @@ const handlerCity = (event, input, list) => {
 
 formSearch.addEventListener("submit", event => {
   event.preventDefault();
-
+    const from = city.find((item) => inputCitiesFrom.value === item.name);
+    const to = city.find((item) =>  inputCitiesTo.value === item.name);
   const formData = {
-    from: city.find((item) => inputCitiesFrom.value === item.name).code,
-    to: city.find((item) =>  inputCitiesTo.value === item.name).code,
+    from:from ,
+    to: to,
     when: inputDateDepart.value
   };
 
-  const requestData = `?depart_date=${formData.when}&origin=${formData.from}` + `&destination=${formData.to}&one_way=true`;
-  getData(CALENDAR + requestData, (response) =>{
-      renderCheap(response, formData.when);
-  });
+  if(formData.from && formData.to){
+    const requestData = `?depart_date=${formData.when}&origin=${formData.from.code}` + `&destination=${formData.to.code}&one_way=true`;
+    getData(CALENDAR + requestData, (response) =>{
+    renderCheap(response, formData.when);
+    });
+  } else{
+    alert('Enter city');
+  }
 });
 
 //обработчики событий

@@ -60,12 +60,47 @@ const selectCity = (event, input, list) => {
   }
 }
 
-const createdCard =() =>{
+const createdCard =(data) =>{
 
+  const ticket =document.createElement('article');
+  ticket.classList.add('ticket');
+
+  let deep = 'deeb';
+  if (data) {
+    deep = `
+          <h3 class="agent">Aviakassa</h3>
+            <div class="ticket__wrapper">
+              <div class="left-side">
+                <a href="https://www.aviasales.ru/search/SVX2905KGD1" class="button button__buy">Купить
+                  за 19700₽</a>
+              </div>
+              <div class="right-side">
+                <div class="block-left">
+                  <div class="city__from">Вылет из города
+                    <span class="city__name">Екатеринбург</span>
+                  </div>
+                  <div class="date">29 мая 2020 г.</div>
+                </div>
+
+                <div class="block-right">
+                  <div class="changes">Без пересадок</div>
+                  <div class="city__to">Город назначения:
+                    <span class="city__name">Калининград</span>
+                  </div>
+                </div>
+              </div>
+            </div>`;
+  } else {
+    deep = '<h3>К сожалению билетов нет</h3>'
+  }
+
+  ticket.insertAdjacentHTML("afterbegin", deep)
+  return ticket;
 }
 
 const renderCheapDay = (cheapTicket) =>{
-  createdCard(cheapTicket[0])
+  const ticket = createdCard(cheapTicket[0]);
+  console.log(ticket);
 };
 
 const renderCheapYear = (cheapTickets) =>{

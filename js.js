@@ -34,14 +34,11 @@ const showCity = (input, list) => {
   list.textContent = "";
 
   if (input.value !== "") {
-    const filterCity = city.filter((item, i, arr) => {
-      if (item.name) {
-        const it = item.name.toLowerCase();
-        let r = it.includes(input.value.toLowerCase());
-        return r;
+    const filterCity = city.filter((item) => {
+        const fixItem = item.name.toLowerCase();
+        return fixItem.startsWith(input.value.toLowerCase());
       }
-
-    });
+    );
 
     filterCity.forEach(item => {
       const li = document.createElement("li");
@@ -65,19 +62,32 @@ const renderCheapDay = (cheapTicket) =>{
 };
 
 const renderCheapYear = (cheapTickets) =>{
-  console.log(cheapTickets);
+
+  cheapTickets.sort((a, b) => {
+
+      if (a.value > b.value) {
+        return 1;
+      }
+      if (a.value < b.value) {
+        return -1;
+      }
+      // a должно быть равным b
+      return 0;
+    });
+    console.log(cheapTickets);
 };
 
 
 const renderCheap = (data, date) =>{
   const cheapTicket = JSON.parse(data).best_prices;
 
+
   cheapTicketDay = cheapTicket.filter((item) =>{
     return item.depart_date === date;
   })
 
   renderCheapDay(cheapTicketDay);
-  renderCheapYear(cheapTicketDay);
+  renderCheapYear(cheapTicket);
 
   console.log(cheapTicket);
 }
@@ -99,12 +109,8 @@ formSearch.addEventListener("submit", event => {
     when: inputDateDepart.value
   };
 
-  const requestData = '?depart_date=' + formData.when +
-                      '&origin=' + formData.from +
-                      '&destination=' + formData.to +
-                      '&one_way=true&token=' +
-                      API_KEY;
-  getData(proxy + CALENDAR + requestData, (response) =>{
+  const requestData = `?depart_date=${formData.when}&origin=${formData.from}` + `&destination=${formData.to}&one_way=true`;
+  getData(CALENDAR + requestData, (response) =>{
       renderCheap(response, formData.when);
   });
 });
@@ -132,5 +138,15 @@ dropdownCitiesTo.addEventListener('click', (event)=>{
 getData(proxy + citiesApi, (data) => { /* фильтруем пустые значения */
   city = JSON.parse(data).filter((item) => {
       return item.name;
+  });
+  city.sort(function(a, b) {
+    if (a.name > b.name) {
+      return 1;
+    }
+    if (a.name < b.name) {
+      return -1;
+    }
+    // a должно быть равным b
+    return 0;
   });
 });

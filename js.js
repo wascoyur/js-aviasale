@@ -60,6 +60,28 @@ const selectCity = (event, input, list) => {
   }
 }
 
+const getChanges = (changes) =>{
+  if (changes) {
+    return changes === 1 ? 'С одной пересадкой': 'С двумя пересадками'
+  } else {
+return 'Без пересадок'
+  }
+}
+
+const getNameCity = (code)=>{
+  const objCity = city.find((item) => item.code === code);
+  return objCity.name;
+}
+
+const getDate =(date) =>{
+  return new Date(date).toLocaleString("ru", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: 'numeric'
+  });
+}
 const createdCard =(data) =>{
 
   const ticket =document.createElement('article');
@@ -68,24 +90,24 @@ const createdCard =(data) =>{
   let deep = 'deeb';
   if (data) {
     deep = `
-          <h3 class="agent">Aviakassa</h3>
+          <h3 class="agent">${data.gate}</h3>
             <div class="ticket__wrapper">
               <div class="left-side">
                 <a href="https://www.aviasales.ru/search/SVX2905KGD1" class="button button__buy">Купить
-                  за 19700₽</a>
+                  за ${data.value}₽</a>
               </div>
               <div class="right-side">
                 <div class="block-left">
                   <div class="city__from">Вылет из города
-                    <span class="city__name">Екатеринбург</span>
+                    <span class="city__name">${getNameCity(data.origin)}</span>
                   </div>
-                  <div class="date">29 мая 2020 г.</div>
+                  <div class="date">${getDate(data.depart_date)}</div>
                 </div>
 
                 <div class="block-right">
-                  <div class="changes">Без пересадок</div>
+                  <div class="changes">${getChanges(data.number_ofchanges)}</div>
                   <div class="city__to">Город назначения:
-                    <span class="city__name">Калининград</span>
+                    <span class="city__name">${getNameCity(data.destination)}</span>
                   </div>
                 </div>
               </div>
@@ -99,11 +121,17 @@ const createdCard =(data) =>{
 }
 
 const renderCheapDay = (cheapTicket) =>{
+
+    cheapestTicket.style.display = 'block';
+    cheapestTicket.innerHTML = "<h2>Самый дешевый билет на выбранную дату</h2>";
+
   const ticket = createdCard(cheapTicket[0]);
-  console.log(ticket);
+  cheapestTicket.append(ticket);
 };
 
 const renderCheapYear = (cheapTickets) =>{
+  otherCheapTickets.style.display = 'block'
+  otherCheapTickets.innerHTML = "<h2>Самые дешевые билеты на другие даты</h2>";
 
   cheapTickets.sort((a, b) => {
 
@@ -116,7 +144,7 @@ const renderCheapYear = (cheapTickets) =>{
       // a должно быть равным b
       return 0;
     });
-    console.log(cheapTickets);
+    // console.log(cheapTickets);
 };
 
 
@@ -131,7 +159,7 @@ const renderCheap = (data, date) =>{
   renderCheapDay(cheapTicketDay);
   renderCheapYear(cheapTicket);
 
-  console.log(cheapTicket);
+  // console.log(cheapTicket);
 }
 
 const handlerCity = (event, input, list) => {
@@ -144,6 +172,7 @@ const handlerCity = (event, input, list) => {
 
 formSearch.addEventListener("submit", event => {
   event.preventDefault();
+
     const from = city.find((item) => inputCitiesFrom.value === item.name);
     const to = city.find((item) =>  inputCitiesTo.value === item.name);
   const formData = {
@@ -158,7 +187,11 @@ formSearch.addEventListener("submit", event => {
     renderCheap(response, formData.when);
     });
   } else{
-    alert('Enter city');
+    cheapestTicket.style.display = "block";
+    cheapestTicket.innerHTML = "<h2>Проверьте правильность написания города отправления и/или назначения</h2>";
+
+    // const ticket = createdCard(cheapTicket[0]);
+    // cheapestTicket.append(ticket);
   }
 });
 

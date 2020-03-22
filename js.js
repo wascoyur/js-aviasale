@@ -60,8 +60,12 @@ const selectCity = (event, input, list) => {
   }
 }
 
+const createdCard =() =>{
+
+}
+
 const renderCheapDay = (cheapTicket) =>{
-  console.log(cheapTicket)
+  createdCard(cheapTicket[0])
 };
 
 const renderCheapYear = (cheapTickets) =>{

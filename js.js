@@ -13,7 +13,8 @@ let city =[];
 const citiesApi = "http://api.travelpayouts.com/data/ru/cities.json",
   API_KEY = "0fb72a23216d66abb8952e3dd7cc3364",
   CALENDAR = "http://min-prices.aviasales.ru/calendar_preload",
-      proxy = "https://cors-anywhere.herokuapp.com/";
+      proxy = "https://cors-anywhere.herokuapp.com/",
+      MAX_COUNT = 10;
 
 const getData = (url, callback) => {
   const request = new XMLHttpRequest();
@@ -82,18 +83,32 @@ const getDate =(date) =>{
     minute: 'numeric'
   });
 }
+
+const getLinkAviasales = (data)=>{
+  let link = 'https://www.aviasales.ru/search/'
+  link += data.origin;
+  const date = new Date(data.depart_date);
+  const day = date.getDay();
+  const moth = date.getMonth() +1;
+  link += day < 10 ? '0' +day : day;
+  link += moth < 10 ? '0' +moth : moth;
+  link += data.destination;
+  link += '1';
+  console.log(link);
+  return link ;
+}
 const createdCard =(data) =>{
 
   const ticket =document.createElement('article');
   ticket.classList.add('ticket');
 
-  let deep = 'deeb';
+  let deep = 'deep';
   if (data) {
     deep = `
           <h3 class="agent">${data.gate}</h3>
             <div class="ticket__wrapper">
               <div class="left-side">
-                <a href="https://www.aviasales.ru/search/SVX2905KGD1" class="button button__buy">Купить
+                <a href="${getLinkAviasales(data)}" class="button button__buy">Купить
                   за ${data.value}₽</a>
               </div>
               <div class="right-side">
@@ -144,6 +159,8 @@ const renderCheapYear = (cheapTickets) =>{
       // a должно быть равным b
       return 0;
     });
+
+    
     // console.log(cheapTickets);
 };
 

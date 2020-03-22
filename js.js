@@ -108,7 +108,7 @@ const createdCard =(data) =>{
           <h3 class="agent">${data.gate}</h3>
             <div class="ticket__wrapper">
               <div class="left-side">
-                <a href="${getLinkAviasales(data)} target="blank"" class="button button__buy">Купить
+                <a href="${getLinkAviasales(data)}" target="blank"" class="button button__buy">Купить
                   за ${data.value}₽</a>
               </div>
               <div class="right-side">

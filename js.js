@@ -108,7 +108,7 @@ const createdCard =(data) =>{
           <h3 class="agent">${data.gate}</h3>
             <div class="ticket__wrapper">
               <div class="left-side">
-                <a href="${getLinkAviasales(data)}" class="button button__buy">Купить
+                <a href="${getLinkAviasales(data)} target="blank"" class="button button__buy">Купить
                   за ${data.value}₽</a>
               </div>
               <div class="right-side">
@@ -159,9 +159,14 @@ const renderCheapYear = (cheapTickets) =>{
       // a должно быть равным b
       return 0;
     });
+    console.log(cheapTickets.length);
 
-    
-    // console.log(cheapTickets);
+    for (let index = 0; index < cheapTickets.length; index++) {
+      const ticket = createdCard(cheapTickets[index]);
+      otherCheapTickets.append(ticket);
+
+    }
+    console.log(otherCheapTickets);
 };
 
 

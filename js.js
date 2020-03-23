@@ -12,7 +12,7 @@ let city =[];
 
 const citiesApi = "https://api.travelpayouts.com/data/ru/cities.json",
   API_KEY = "0fb72a23216d66abb8952e3dd7cc3364",
-  CALENDAR = "http://min-prices.aviasales.ru/calendar_preload",
+  CALENDAR = "https://min-prices.aviasales.ru/calendar_preload",
       proxy = "https://cors-anywhere.herokuapp.com/",
       MAX_COUNT = 10;
 
